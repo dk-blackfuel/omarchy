@@ -648,7 +648,7 @@ Item {
   // stays the configured size the widgets are drawn at.
   readonly property var screenBarSizes: {
     var sizes = ({})
-    var screens = Quickshell.screens
+    var screens = Commons.Screens.real
     for (var i = 0; i < screens.length; i++) sizes[screens[i].name] = root.thicknessFor(screens[i])
     return sizes
   }
@@ -1318,7 +1318,7 @@ Item {
   }
 
   Variants {
-    model: Quickshell.screens
+    model: Commons.Screens.real
 
     delegate: Component {
       BarPanel {
@@ -1330,7 +1330,7 @@ Item {
   }
 
   Variants {
-    model: Quickshell.screens
+    model: Commons.Screens.real
 
     delegate: Component {
       DragGhostPanel {
@@ -1343,7 +1343,7 @@ Item {
   }
 
   Variants {
-    model: Quickshell.screens
+    model: Commons.Screens.real
 
     delegate: Component {
       BarMoveGhostPanel {

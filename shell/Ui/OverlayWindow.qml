@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
+import qs.Commons as Commons
 
 // Map a fresh fullscreen surface on each open. Keep its first frames
 // transparent until Qt receives the output's scale, so it opens sharp without
@@ -43,10 +44,11 @@ PanelWindow {
   function focusedScreen() {
     var monitor = Hyprland.focusedMonitor
     var name = monitor ? String(monitor.name || "") : ""
-    for (var i = 0; i < Quickshell.screens.length; i++) {
-      if (Quickshell.screens[i].name === name) return Quickshell.screens[i]
+    var screens = Commons.Screens.real
+    for (var i = 0; i < screens.length; i++) {
+      if (screens[i].name === name) return screens[i]
     }
-    return Quickshell.screens.length > 0 ? Quickshell.screens[0] : null
+    return screens.length > 0 ? screens[0] : null
   }
 
   // Live monitor scaling does not emit a Hyprland monitor event, so its cached
@@ -60,7 +62,7 @@ PanelWindow {
   Connections {
     target: Quickshell
     function onScreensChanged() {
-      if (window.shown && Quickshell.screens.indexOf(window.targetScreen) < 0) {
+      if (window.shown && Commons.Screens.real.indexOf(window.targetScreen) < 0) {
         window.targetScreen = null
         // Let the removed output finish closing its old window before mapping
         // a replacement, rather than recreating it during Qt's teardown.
